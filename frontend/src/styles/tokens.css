@@ -1,0 +1,31 @@
+/* DESIGN TOKENS — única fonte de valores de design. Componentes só usam var(--...). */
+:root {
+  /* cores */
+  --color-bg: #0B0F14; --color-surface: #1A1F2B; --color-surface-hi: #252C3B;
+  --color-text: #E5E7EB; --color-text-dim: #9AA3B2;
+  --color-primary: #6C63FF; --color-secondary: #FF6B3D;
+  --color-overlay: rgba(5, 8, 12, .8);
+  /* tipografia */
+  --font-sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-xs: .75rem; --fs-sm: .875rem; --fs-md: 1rem; --fs-lg: 1.25rem; --fs-xl: 1.625rem; --fs-hero: 3rem;
+  --fw-regular: 500; --fw-bold: 700;
+  /* espaçamento */
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-6: 1.5rem; --sp-8: 2rem; --sp-12: 3rem;
+  /* bordas / radius / sombras */
+  --border-subtle: 1px solid rgba(255, 255, 255, .08);
+  --radius-sm: .5rem; --radius-md: .75rem; --radius-lg: 1.25rem; --radius-pill: 999px;
+  --shadow-card: 0 .5rem 1.5rem rgba(0, 0, 0, .45);
+  /* foco e seleção */
+  --color-focus: #FFFFFF;
+  --focus-ring: 0 0 0 .2rem var(--color-focus), 0 0 1.5rem .3rem rgba(108, 99, 255, .75);
+  --focus-scale: 1.06;
+  --selected-bg: rgba(108, 99, 255, .22);
+  --selected-bar: var(--color-primary);
+  /* tamanhos */
+  --card-poster-w: 11rem; --card-poster-h: 16.5rem;
+  --card-wide-w: 18rem; --card-wide-h: 10.125rem;
+  --card-channel-w: 11rem; --card-channel-h: 6.5rem;
+  --sidebar-w: 15rem; --hero-h: 26rem; --page-pad: 2.5rem;
+  /* animação */
+  --dur-fast: 120ms; --dur-base: 200ms; --ease: cubic-bezier(.2, .8, .2, 1);
+}

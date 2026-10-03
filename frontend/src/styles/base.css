@@ -1,0 +1,14 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+html { font-size: clamp(14px, 1.05vw, 26px); } /* escala em TVs/4K via rem */
+body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans);
+  font-weight: var(--fw-regular); overflow: hidden; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; border: 0; background: none; }
+h1, h2 { font-weight: var(--fw-bold); }
+ul { list-style: none; padding: 0; }
+
+/* FOCO — estado extremamente claro; só transform/box-shadow (barato em TV) */
+[data-focusable] { outline: none; cursor: pointer;
+  transition: transform var(--dur-base) var(--ease), box-shadow var(--dur-base) var(--ease), background var(--dur-fast); }
+[data-focusable]:focus { box-shadow: var(--focus-ring); transform: scale(var(--focus-scale)); position: relative; z-index: 2; }
+[data-disabled="true"] { opacity: .4; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

@@ -1,0 +1,25 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NEXORA — Ativar dispositivo</title>
+<style>:root{color-scheme:dark}body{margin:0;font:16px system-ui,sans-serif;background:#0B0F14;color:#E5E7EB;display:grid;place-items:center;min-height:100vh;padding:16px}main{width:100%;max-width:420px;background:#1A1F2B;border-radius:16px;padding:24px}h1{margin:0 0 4px;font-size:22px;letter-spacing:.2em}p{color:#9AA3B2;margin:.25em 0 1em}label{display:block;font-size:13px;color:#9AA3B2;margin-top:12px}input,select,button{width:100%;box-sizing:border-box;margin-top:4px;padding:12px;border-radius:10px;border:1px solid #2c3445;background:#0B0F14;color:inherit;font:inherit}button{background:#6C63FF;border:0;font-weight:700;margin-top:20px}#msg{margin-top:14px;min-height:1.4em}.ok{color:#7ee787}.err{color:#FF6B3D}</style></head><body><main>
+<h1>NEXORA</h1><p>Ative sua TV: adicione sua fonte de conteúdo pelo celular.</p>
+<form id="f">
+<label>ID do dispositivo<input id="id" required pattern="NX-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}" autocapitalize="characters" autocomplete="off"></label>
+<label>Código mostrado na TV<input id="code" inputmode="numeric" maxlength="7" required autocomplete="off"></label>
+<label>Nome da fonte<input id="name" maxlength="40" required></label>
+<label>Tipo<select id="kind"><option value="m3u">Lista M3U / M3U8</option><option value="xtream">Xtream Codes</option></select></label>
+<div id="m3u"><label>URL da lista<input id="url" type="url" placeholder="https://..."></label></div>
+<div id="xt" hidden><label>Servidor<input id="host" type="url" placeholder="http://servidor:porta"></label><label>Usuário<input id="user" autocomplete="off"></label><label>Senha<input id="pass" type="password" autocomplete="off"></label></div>
+<button>Enviar para a TV</button><div id="msg" role="status"></div></form>
+<p>O NEXORA é apenas um player e não fornece conteúdo. Use apenas fontes que você tem direito de acessar.</p></main>
+<script>
+const $=i=>document.getElementById(i);
+$('id').value=(new URLSearchParams(location.search).get('id')||'').toUpperCase();
+$('kind').onchange=()=>{const x=$('kind').value==='xtream';$('xt').hidden=!x;$('m3u').hidden=x};
+$('f').onsubmit=async e=>{e.preventDefault();const m=$('msg');m.className='';m.textContent='Enviando…';
+ const x=$('kind').value==='xtream';const b={code:$('code').value.replace(/\D/g,''),name:$('name').value.trim(),kind:$('kind').value};
+ if(x){b.host=$('host').value.trim();b.username=$('user').value;b.password=$('pass').value}else b.url=$('url').value.trim();
+ try{const r=await fetch('/api/devices/'+encodeURIComponent($('id').value.trim().toUpperCase())+'/sources',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b)});
+  const j=await r.json().catch(()=>({}));
+  if(r.ok){m.className='ok';m.textContent='Enviado! Sua TV vai adicionar a fonte em instantes. Para outra fonte, use o novo código mostrado na TV.';$('code').value='';$('url').value='';$('pass').value=''}
+  else{m.className='err';m.textContent=j.error||'Não foi possível enviar.'}}
+ catch{m.className='err';m.textContent='Sem conexão com o servidor.'}};
+</script></body></html>
